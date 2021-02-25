@@ -1,0 +1,28 @@
+<div class="text-center">
+
+  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h3 class="masthead-brand">Shop4Me</h3>
+        <nav class="nav nav-masthead justify-content-center">
+          <a class="nav-link" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >Home</a>
+          <a *ngIf="(isLoggedIn | async) === false" class="nav-link" routerLink="signin" routerLinkActive="active">Sign In</a>
+        </nav>
+      </div>
+    </header>
+  </div>
+  
+  <main role="main" class="container">
+    <router-outlet></router-outlet>
+  </main><!-- /.container -->
+
+  <footer class="mastfoot mt-auto">
+    <div class="inner">
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <amplify-sign-out style="align-content: center; text-align: center;" *ngIf="(isLoggedIn | async)" [class]="{ 'dfa': true }"></amplify-sign-out>
+      </div>
+      <!-- <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p> -->
+      <p>SENG 561, Spring 2021</p>
+    </div>
+  </footer>
+</div>

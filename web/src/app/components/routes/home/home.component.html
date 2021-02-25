@@ -1,0 +1,12 @@
+
+<main role="main" class="inner cover">
+  <h1 class="cover-heading">Shop4Me</h1>
+  <p class="lead">Shop4Me does your shopping so you don't have to.</p>
+  <p class="lead">
+    <img src="/assets/logo.png" width="200" alt="Shop4Me">
+  </p>
+  <p class="lead" *ngIf="(isLoggedIn | async) === false">
+    <a routerLink="signin" class="btn btn-lg btn-secondary">Get Started</a>
+  </p>
+  <app-search *ngIf="(isLoggedIn | async)"></app-search>
+</main>
