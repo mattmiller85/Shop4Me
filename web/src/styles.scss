@@ -131,3 +131,23 @@ body {
   --white: #FFFFFF;
   --light-blue: #00a1c9;
   }
+
+  div.results {
+    text-align: left;
+  }
+
+  div.result {
+    text-align: left !important;
+  }
+
+  div.result.name {
+    width: 200px;
+  }
+
+  div.result.name a {
+    color: var(--light-blue);
+  }
+
+  div.result.price {
+    width: 100px;
+  }
