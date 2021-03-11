@@ -14,6 +14,8 @@ import getconfig from './config';
 import { SigninComponent } from './components/routes/signin/signin.component';
 import { SearchComponent } from './components/search/search.component';
 import { SignoutComponent }  from './components/routes/signout/signout.component';
+import { SearchesComponent } from './routes/searches/searches.component';
+import { AccountComponent } from './routes/account/account.component';
 
 const config = getconfig();
 
@@ -41,7 +43,9 @@ Amplify.configure({
     ShopComponent,
     SigninComponent,
     SearchComponent,
-    SignoutComponent
+    SignoutComponent,
+    SearchesComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

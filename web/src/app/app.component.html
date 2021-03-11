@@ -6,6 +6,8 @@
         <h3 class="masthead-brand">Shop4Me</h3>
         <nav class="nav nav-masthead justify-content-center">
           <a class="nav-link" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >Home</a>
+          <a *ngIf="(isLoggedIn | async) === true" class="nav-link" [routerLink]="['/searches']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >Saved Searches</a>
+          <a *ngIf="(isLoggedIn | async) === true" class="nav-link" [routerLink]="['/account']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >Account</a>
           <a *ngIf="(isLoggedIn | async) === false" class="nav-link" routerLink="signin" routerLinkActive="active">Sign In</a>
         </nav>
       </div>
@@ -18,10 +20,6 @@
 
   <footer class="mastfoot mt-auto">
     <div class="inner">
-      <div style="display: flex; flex-direction: column; align-items: center;">
-        <amplify-sign-out style="align-content: center; text-align: center;" *ngIf="(isLoggedIn | async)"></amplify-sign-out>
-      </div>
-      <!-- <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p> -->
       <p>SENG 561, Spring 2021 - <a href="mailto:contact@shop4me.com">Contact Us</a></p>
     </div>
   </footer>
