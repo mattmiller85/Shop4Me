@@ -8,5 +8,7 @@
   <p class="lead" *ngIf="(isLoggedIn | async) === false">
     <a routerLink="signin" class="btn btn-lg btn-secondary">Get Started</a>
   </p>
-  <app-search *ngIf="(isLoggedIn | async)"></app-search>
 </main>
+<div>
+  <app-search *ngIf="(isLoggedIn | async)"></app-search>
+</div>

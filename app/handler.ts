@@ -15,12 +15,12 @@ export const search: APIGatewayProxyHandler = async (event, _context) => {
       searchTerms: searchRequest.searchTerms,
       numResults: 1,
       results: [
-        { 
+        {
           name: 'Some weird thing',
           price: '$500.00',
           url: 'https://www.google.com',
           description: 'This is something that is hard to find'
-         }
+        }
       ],
     }, null, 2),
   };
