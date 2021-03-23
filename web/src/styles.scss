@@ -139,3 +139,16 @@ body {
   div.result.name a {
     color: var(--light-blue);
   }
+
+  div.lead p.desc {
+    font-size: smaller;
+    background-color: var(--silver);
+    color:var(--darkBlue);
+    padding: 0.2em;
+    border-radius: 0.2em;
+  }
+
+  div.lead q {
+    font-size: larger;
+    text-decoration: underline;
+  }

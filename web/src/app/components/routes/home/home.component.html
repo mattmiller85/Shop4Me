@@ -4,9 +4,32 @@
   <p class="lead">
     <img src="/assets/logo.png" width="200" alt="Shop4Me">
   </p>
-  <p class="lead" *ngIf="(isLoggedIn | async) === false">
+  <div class="lead" *ngIf="(isLoggedIn | async) === true">
+    <h4>Greetings {{userFirstName}}!</h4>
+
+    <p>No searches have found a match as of yet.</p>
+    
+    <p>Put us to work! Let us create a new savable search together. Let us do the heavy lifting, and we will let you know when we find it!</p>
+    
+    <p>Or perhaps you like to roll the dice by running a live search?</p>
+
+    <p>To get started, Enter your desired search terms separated by a space and Click the Shop! Button.  It’s that easy!</p>
+  </div>
+  <div class="lead" *ngIf="(isLoggedIn | async) === false">
+    <p>Tired of endlessly searching for a unique item?</p>
+    <p>Not sure where to find a replacement vintage item?</p>
+    <p>Too much time wasted switching between online shopping websites with no applicable results?</p>
+
+    <p>Well, look no further because Shop4Me is here to help!</p>
+
+    <q>How does it work?</q>
+    <p class="desc">Shop4Me is a website that will allow you to create custom searches for various hard-to-find items. Once a search is configured and submitted, relevant results will be returned to the you for your review. You can then click a result to go to that site. Searches can be done live, or they can be saved and scheduled to run at a time you specify. If you do not instantly get a result, you can save that search, schedule it to run, and be notified once your search hits a result.</p>
+
+    <p>All you need to do is create an account, login, and begin searching, and Shop4Me will do the rest!</p>
+
+    <p>Save time with Shop4Me. &reg;</p>
     <a routerLink="signin" class="btn btn-lg btn-secondary">Get Started</a>
-  </p>
+  </div>
 </main>
 <div>
   <app-search *ngIf="(isLoggedIn | async)"></app-search>
