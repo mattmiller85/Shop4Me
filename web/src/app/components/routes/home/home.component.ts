@@ -9,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   isLoggedIn: BehaviorSubject<boolean>;
+  whoIsUser: String;
 
   constructor(private authService: AuthService) {
     this.isLoggedIn = authService.isLoggedIn;
+    this.whoIsUser = authService.getUsername();
   }
 
   ngOnInit(): void {

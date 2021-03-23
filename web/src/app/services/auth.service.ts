@@ -7,8 +7,21 @@ import Amplify, { Auth } from 'aws-amplify';
 })
 export class AuthService {
   isLoggedIn = new BehaviorSubject(false);
+  username = "";
 
   constructor() {
-    Auth.currentUserInfo().then(u => this.isLoggedIn.next(u != null))
+    Auth.currentUserInfo().then(u => {
+      this.isLoggedIn.next(u != null);
+    })
+    .catch(err => console.log(err));
+
+    Auth.currentAuthenticatedUser().then(u => {
+      this.username = u.getUsername()
+    })
+    .catch(err => console.log(err));
+  }
+
+  getUsername() {
+    return this.username;
   }
 }
