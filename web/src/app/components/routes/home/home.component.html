@@ -32,5 +32,8 @@
   </div>
 </main>
 <div>
+  <h2 *ngIf="(isLoggedIn | async)">
+    Welcome {{whoIsUser}}!
+  </h2>
   <app-search *ngIf="(isLoggedIn | async)"></app-search>
 </div>

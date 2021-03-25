@@ -8,12 +8,21 @@ import { CognitoUser } from 'amazon-cognito-identity-js';
 })
 export class AuthService {
   isLoggedIn = new BehaviorSubject(false);
-  user = new Subject<{ username: string, attributes: { email: string, name: string}}>();
+  username = '';
 
   constructor() {
     Auth.currentUserInfo().then(u => {
       this.isLoggedIn.next(u != null);
-      this.user.next(u);
-    });
+    })
+    .catch(err => console.log(err));
+
+    Auth.currentAuthenticatedUser().then(u => {
+      this.username = u.getUsername();
+    })
+    .catch(err => console.log(err));
+  }
+
+  getUsername() {
+    return this.username;
   }
 }
