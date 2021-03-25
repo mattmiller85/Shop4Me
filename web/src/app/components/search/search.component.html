@@ -7,12 +7,11 @@
         <input [(ngModel)]="model.searchTerms" (keyup)="canSearch($event)" name="searchTerms" type="text" class="form-control" id="shop4mesearch" placeholder="Enter search terms">
       </div>
     </div>
-    <div class="row justify-content-center">
-      <div class="col col-sm-3">
-        <button *ngIf="model.canSearch" type="submit" class="btn btn-primary">Shop!</button>
-      </div>
-      <div class="col col-sm-3">
-        <button *ngIf="model.canSearch" type="button" class="btn btn-secondary" (click)="saveSearchDetails($event)">Save this search</button>
+    <div class="row justify-content-center mt-1">
+      <div class="col col-sm-6">
+        <button *ngIf="model.canSearch" type="submit" class="btn btn-primary">Shop!</button>&nbsp;
+        <button *ngIf="model.canSearch" type="button" class="btn btn-secondary" (click)="saveSearchDetails($event)">Save this search</button>&nbsp;
+        <button *ngIf="model.canSearch" type="button" class="btn btn-warning" (click)="clearSearch($event)">Clear</button>
       </div>
     </div>
   </div>
@@ -32,7 +31,15 @@
       </div>
     </div>
     
-    
+    <div class="row justify-content-center mt-1">
+      <div class="col col-6">
+        <ul class="list-group">
+          <li *ngFor="let err of model.messages" class="list-group-item list-group-item-{{err.type}}">
+            {{ err.message }}
+          </li>
+        </ul>
+      </div>
+    </div>
     
   </div>
 </form>

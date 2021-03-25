@@ -1,6 +1,7 @@
+import { map, first } from 'rxjs/operators';
 import { SearchResponse, SaveSearchRequest } from './../../../../../core/models';
 import { SaveSearchResponse } from './../../../../../core/models';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ApiService } from './../../services/api.service';
 import { Component, OnInit } from '@angular/core';
 import { SearchRequest } from '../../../../../core/models';
@@ -16,7 +17,8 @@ export class SearchComponent implements OnInit {
     searchTerms: '',
     saveSearch: false,
     showSaveDetails: false,
-    canSearch: false
+    canSearch: false,
+    messages: new Array<{ type: string, message: string }>()
   };
 
   saveModel: SaveSearchRequest = {
@@ -51,13 +53,36 @@ export class SearchComponent implements OnInit {
   saveSearch(evt: Event): void {
     evt.preventDefault();
     evt.stopPropagation();
+    this.model.messages = [];
+    if (this.saveModel.searchName === undefined || this.saveModel.searchName.trim() === '') {
+      this.model.messages.push({ type: 'danger', message: 'Please enter a "Name" for the search.' });
+    }
+    if (this.saveModel.product === undefined || this.saveModel.product.trim() === '') {
+      this.model.messages.push({ type: 'danger', message: 'Please enter a "Product" for the search.' });
+    }
+
+    if (this.model.messages.length) {
+      return;
+    }
     this.saveModel.searchTerms = this.model.searchTerms;
-    this.saveResults = this.apiService.save(this.saveModel);
+    this.apiService.save(this.saveModel).subscribe((r) => {
+      this.model.messages.push({ type: r.success ? 'success' : 'danger', message: r.message });
+    });
   }
 
   saveSearchDetails(evt: Event): void {
     evt.preventDefault();
     evt.stopPropagation();
     this.model.showSaveDetails = !this.model.showSaveDetails;
+  }
+
+  clearSearch(evt: Event): void {
+    evt.preventDefault();
+    evt.stopPropagation();
+    this.model.canSearch = false;
+    this.model.messages = [];
+    this.model.showSaveDetails = false;
+    this.model.searchTerms = '';
+    this.results = new Subject();
   }
 }

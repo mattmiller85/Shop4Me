@@ -5,7 +5,7 @@
     <img src="/assets/logo.png" width="200" alt="Shop4Me">
   </p>
   <div class="lead" *ngIf="(isLoggedIn | async) === true">
-    <h4>Greetings {{userFirstName}}!</h4>
+    <h4>Greetings {{authService.username}}!</h4>
 
     <p>No searches have found a match as of yet.</p>
     
@@ -33,7 +33,7 @@
 </main>
 <div>
   <h2 *ngIf="(isLoggedIn | async)">
-    Welcome {{whoIsUser}}!
+    Welcome {{authService.username}}!
   </h2>
   <app-search *ngIf="(isLoggedIn | async)"></app-search>
 </div>

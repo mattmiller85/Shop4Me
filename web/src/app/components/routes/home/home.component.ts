@@ -11,11 +11,9 @@ import { map } from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
   isLoggedIn: BehaviorSubject<boolean>;
-  whoIsUser: String;
 
-  constructor(private authService: AuthService) {
+  constructor(public authService: AuthService) {
     this.isLoggedIn = authService.isLoggedIn;
-    this.whoIsUser = authService.getUsername();
   }
 
   ngOnInit(): void {

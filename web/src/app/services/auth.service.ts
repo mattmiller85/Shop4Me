@@ -21,8 +21,4 @@ export class AuthService {
     })
     .catch(err => console.log(err));
   }
-
-  getUsername() {
-    return this.username;
-  }
 }
