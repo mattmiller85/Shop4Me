@@ -4,11 +4,11 @@
   "description": "Serverless webpack example using Typescript",
   "main": "handler.js",
   "scripts": {
-    
     "start": "sls offline start",
     "deploy": "sls deploy"
   },
   "dependencies": {
+    "aws-sdk": "^2.871.0",
     "source-map-support": "^0.5.10"
   },
   "devDependencies": {

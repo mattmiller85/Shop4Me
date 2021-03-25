@@ -14,6 +14,7 @@ const serverlessConfiguration: Serverless = {
       includeModules: true
     }
   },
+
   // Add the serverless-webpack plugin
   plugins: ['serverless-webpack', 'serverless-offline'],
   provider: {
@@ -27,6 +28,40 @@ const serverlessConfiguration: Serverless = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
     },
   },
+  resources: {
+    Resources: {
+      shopData: {
+        Type: "AWS::DynamoDB::Table",
+        Properties: {
+          TableName: "shop4me.shopData",
+          AttributeDefinitions: [
+            {
+              AttributeName: "pk",
+              AttributeType: "S"
+            },
+            {
+              AttributeName: "sk",
+              AttributeType: "S"
+            },
+          ],
+          KeySchema: [
+            {
+              AttributeName: "pk",
+              KeyType: "HASH"
+            },
+            {
+              AttributeName: "sk",
+              KeyType: "RANGE"
+            }
+          ],
+          ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1
+          }
+        }
+      }
+    }
+  },
   functions: {
     search: {
       handler: 'handler.search',
@@ -35,6 +70,21 @@ const serverlessConfiguration: Serverless = {
           http: {
             method: 'post',
             path: 'search',
+            cors: true, 
+            authorizer: {
+              arn: 'arn:aws:cognito-idp:us-east-2:609487005418:userpool/us-east-2_80A86RKt9'
+            }
+          }
+        }
+      ]
+    },
+    saveSearch: {
+      handler: 'handler.save',
+      events: [
+        {
+          http: {
+            method: 'post',
+            path: 'save',
             cors: true, 
             authorizer: {
               arn: 'arn:aws:cognito-idp:us-east-2:609487005418:userpool/us-east-2_80A86RKt9'

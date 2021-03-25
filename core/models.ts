@@ -1,3 +1,4 @@
+import { search } from './../app/handler';
 export interface SearchRequest {
   searchTerms: string;
   saveSearch: boolean;
@@ -15,4 +16,21 @@ export interface SearchResponse {
       description: string;
     }
   >
+}
+
+export interface SaveSearchRequest {
+  pk: string;
+  sk: string;
+  timestamp: number;
+  searchTerms: string;
+  searchName: string;
+  product: string;
+  color?: string;
+  brand?: string;
+}
+
+export interface SaveSearchResponse {
+  message: string;
+  search: SaveSearchRequest;
+  success: boolean;
 }

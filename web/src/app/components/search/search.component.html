@@ -1,8 +1,39 @@
 <form (submit)="search($event)" name="searchForm" id="searchForm">
+
   <div class="form-group">
-    <label for="shop4mesearch">What are you looking for?</label>
-    <input [(ngModel)]="model.searchTerms" name="searchTerms" type="text" class="form-control" id="shop4mesearch" placeholder="Enter search terms">
-    <button type="submit" class="btn btn-primary">Shop!</button>
+    <div class="row justify-content-center">
+      <div class="col col-sm-6">
+        <label for="shop4mesearch">What are you looking for?</label>
+        <input [(ngModel)]="model.searchTerms" (keyup)="canSearch($event)" name="searchTerms" type="text" class="form-control" id="shop4mesearch" placeholder="Enter search terms">
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col col-sm-3">
+        <button *ngIf="model.canSearch" type="submit" class="btn btn-primary">Shop!</button>
+      </div>
+      <div class="col col-sm-3">
+        <button *ngIf="model.canSearch" type="button" class="btn btn-secondary" (click)="saveSearchDetails($event)">Save this search</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group" *ngIf="model.showSaveDetails && model.canSearch">
+    <div class="row align-items-end">
+      <div class="col col-sm-5">
+        <label for="save_name">Name</label>
+        <input [(ngModel)]="saveModel.searchName" name="searchName" type="text" class="form-control" id="searchName" placeholder="Name">
+      </div>
+      <div class="col col-sm-5">
+        <label for="save_product">Product</label>
+        <input [(ngModel)]="saveModel.product" name="product" type="text" class="form-control" id="product" placeholder="Product">
+      </div>
+      <div class="col col-sm-2">
+        <button type="button" class="btn btn-primary" (click)="saveSearch($event)">Save</button>
+      </div>
+    </div>
+    
+    
+    
   </div>
 </form>
 <div>
