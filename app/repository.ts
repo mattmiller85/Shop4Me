@@ -24,4 +24,21 @@ export default class Repository {
     await this.ddb.put(params).promise();
   }
 
+  async getSearches(): Promise<SaveSearchRequest[]> {
+
+    const pk = `SEARCH#${this.userId}`;
+
+    var results = await this.ddb.query({
+      KeyConditionExpression: 'pk = :pk',
+      ExpressionAttributeValues: {
+        ':pk': pk
+      },
+      TableName: 'shop4me.shopData',
+      ScanIndexForward: false
+    }).promise();
+
+    console.log(results); 
+    return results.Items as SaveSearchRequest[];
+  }
+
 }

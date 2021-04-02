@@ -2,7 +2,6 @@ import { Auth } from 'aws-amplify';
 
 export default () => {
   return {
-    socketUrl: 'wss://870olo7mrh.execute-api.us-east-2.amazonaws.com/dev',
     cognito: {
       userPoolRegion: 'us-east-2',
       userPoolId: 'us-east-2_80A86RKt9',
@@ -11,8 +10,8 @@ export default () => {
     apis: [
       {
         name: 'api',
-        endpoint: 'http://localhost:3000/dev',
-        // endpoint: 'https://xj3ib1h8w0.execute-api.us-east-1.amazonaws.com/dev',
+        // endpoint: 'http://localhost:3000/dev',
+        endpoint: 'https://xj3ib1h8w0.execute-api.us-east-1.amazonaws.com/dev',
         region: 'us-east-2',
         custom_header: async () => {
           return { Authorization: `Bearer ${(await Auth.currentSession()).getIdToken().getJwtToken()}` };

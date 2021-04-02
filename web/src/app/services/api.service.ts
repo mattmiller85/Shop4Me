@@ -1,4 +1,4 @@
-import { SearchRequest, SearchResponse, SaveSearchResponse, SaveSearchRequest } from './../../../../core/models';
+import { SearchRequest, SearchResponse, SaveSearchResponse, SaveSearchRequest, SaveSearchesResponse } from './../../../../core/models';
 import { Injectable } from '@angular/core';
 
 import Amplify, { API } from 'aws-amplify';
@@ -18,5 +18,9 @@ export class ApiService {
 
   public save(searchRequest: SaveSearchRequest): Observable<SaveSearchResponse> {
     return from(API.post('api', '/save', { body: searchRequest }));
+  }
+
+  public getSavedSearches(): Observable<SaveSearchesResponse> {
+    return from(API.get('api', '/searches', { }));
   }
 }

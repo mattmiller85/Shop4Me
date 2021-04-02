@@ -1,5 +1,6 @@
 import type { Serverless } from 'serverless/aws';
 
+
 const serverlessConfiguration: Serverless = {
   service: {
     name: 'shop4me-service',
@@ -27,6 +28,20 @@ const serverlessConfiguration: Serverless = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
     },
+    iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: [
+          'dynamodb:Query',
+          'dynamodb:Scan',
+          'dynamodb:GetItem',
+          'dynamodb:PutItem',
+          'dynamodb:UpdateItem',
+          'dynamodb:DeleteItem',
+        ],
+        Resource: 'arn:aws:dynamodb:us-east-1:609487005418:table/shop4me.shopData'
+      }
+    ]
   },
   resources: {
     Resources: {
@@ -62,6 +77,7 @@ const serverlessConfiguration: Serverless = {
       }
     }
   },
+
   functions: {
     search: {
       handler: 'handler.search',
@@ -85,6 +101,21 @@ const serverlessConfiguration: Serverless = {
           http: {
             method: 'post',
             path: 'save',
+            cors: true, 
+            authorizer: {
+              arn: 'arn:aws:cognito-idp:us-east-2:609487005418:userpool/us-east-2_80A86RKt9'
+            }
+          }
+        }
+      ]
+    },
+    getSearches: {
+      handler: 'handler.getSearches',
+      events: [
+        {
+          http: {
+            method: 'get',
+            path: 'searches',
             cors: true, 
             authorizer: {
               arn: 'arn:aws:cognito-idp:us-east-2:609487005418:userpool/us-east-2_80A86RKt9'

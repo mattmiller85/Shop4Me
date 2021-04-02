@@ -1,4 +1,4 @@
-import { SearchRequest, SearchResponse, SaveSearchResponse, SaveSearchRequest } from './../core/models';
+import { SearchRequest, SearchResponse, SaveSearchResponse, SaveSearchRequest, SaveSearchesResponse } from './../core/models';
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import 'source-map-support/register';
 import Repository from './repository';
@@ -35,6 +35,24 @@ export const save: APIGatewayProxyHandler = async (event, _context) => {
   const userId = _context.identity?.cognitoIdentityId || 'local';
 
   const repo = new Repository(userId);
+
+  // check for the free tier limit
+  var searches = await repo.getSearches();
+  if (searches.length >=3 ) {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+      body: JSON.stringify(<SaveSearchResponse>{
+        message: 'You have reached the free tier limit of 3 saved searches',
+        success: false,
+        search: searchRequest,
+      }, null, 2),
+    };
+  }
+
   await repo.saveSearch(searchRequest);
 
   return {
@@ -47,6 +65,28 @@ export const save: APIGatewayProxyHandler = async (event, _context) => {
       message: 'Search saved!',
       success: true,
       search: searchRequest,
+    }, null, 2),
+  };
+}
+
+export const getSearches: APIGatewayProxyHandler = async (event, _context) => {
+  console.log(event);
+  
+  const userId = _context.identity?.cognitoIdentityId || 'local';
+
+  const repo = new Repository(userId);
+  const results = await repo.getSearches();
+
+  return {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
+    body: JSON.stringify(<SaveSearchesResponse>{
+      message: 'Search saved!',
+      success: true,
+      searches: results,
     }, null, 2),
   };
 }

@@ -34,3 +34,9 @@ export interface SaveSearchResponse {
   search: SaveSearchRequest;
   success: boolean;
 }
+
+export interface SaveSearchesResponse {
+  message: string;
+  searches: SaveSearchRequest[];
+  success: boolean;
+}

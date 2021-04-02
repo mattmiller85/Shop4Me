@@ -1,1 +1,19 @@
-<p>Saved searches to go here</p>
+<h3>Saved Searches</h3>
+<ul class="list-group" style="width:100%">
+  <li class="list-group-item list-group-item-info"> 
+    <div class="row">
+      <div class="col col-3">Name</div>
+      <div class="col col-3">Product</div>
+      <div class="col col-3">Terms</div>
+      <div class="col col-3">&nbsp;</div>
+    </div>
+  </li>
+  <li class="list-group-item list-group-item-dark" *ngFor="let item of (model | async)?.searches">
+    <div class="row">
+      <div class="col col-3">{{ item.searchName }}</div>
+      <div class="col col-3">{{ item.product }}</div>
+      <div class="col col-3">{{ item.searchTerms }}</div>
+      <div class="col col-3">-buttons here-</div>
+    </div>
+  </li>
+</ul>
