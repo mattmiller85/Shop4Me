@@ -13,7 +13,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 })
 export class SearchesComponent implements OnInit {
 
-  searchResults = new Observable<SaveSearchesResponse>();
+  model = new Observable<SaveSearchesResponse>();
 
   constructor(private apiService: ApiService, private dialog: MatDialog) { }
 
@@ -22,7 +22,7 @@ export class SearchesComponent implements OnInit {
   }
 
   getSearches(): void {
-    this.searchResults = this.apiService.getSavedSearches();
+    this.model = this.apiService.getSavedSearches();
   }
 
   saveSearch(searchRequest: SaveSearchRequest): void {
@@ -45,5 +45,9 @@ export class SearchesComponent implements OnInit {
           }
         }
     );  
+  }
+    
+  deleteSearch(search: SaveSearchRequest): void {
+    this.apiService.delete(search).subscribe(d => this.model = this.apiService.getSavedSearches());
   }
 }

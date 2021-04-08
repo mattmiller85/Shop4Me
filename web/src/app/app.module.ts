@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,7 +14,7 @@ import Amplify from 'aws-amplify';
 import getconfig from './config';
 import { SigninComponent } from './components/routes/signin/signin.component';
 import { SearchComponent } from './components/search/search.component';
-import { SignoutComponent }  from './components/routes/signout/signout.component';
+import { SignoutComponent } from './components/routes/signout/signout.component';
 import { SearchesComponent } from './routes/searches/searches.component';
 import { AccountComponent } from './routes/account/account.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -64,6 +65,7 @@ Amplify.configure({
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     NgbModule,
     AmplifyUIAngularModule,
     FormsModule,

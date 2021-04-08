@@ -8,7 +8,7 @@
       <div class="col col-3">&nbsp;</div>
     </div>
   </li>
-  <li class="list-group-item list-group-item-dark" *ngFor="let item of (searchResults | async)?.searches">
+  <li class="list-group-item list-group-item-dark" *ngFor="let item of (model | async)?.searches">
     <div class="row">
       <div class="col col-3">{{ item.searchName }}</div>
       <div class="col col-3">{{ item.product }}</div>
@@ -22,7 +22,7 @@
             <mat-icon>edit</mat-icon>
             <span>Edit</span>
           </button>
-          <button mat-menu-item>
+          <button mat-menu-item (click)="deleteSearch(item)">
             <mat-icon>delete_forever</mat-icon>
             <span>Delete</span>
           </button>
