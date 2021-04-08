@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -17,11 +17,18 @@ import { SignoutComponent }  from './components/routes/signout/signout.component
 import { SearchesComponent } from './routes/searches/searches.component';
 import { AccountComponent } from './routes/account/account.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EditSearchComponent } from './components/edit-search/edit-search.component';
 
 /* Angular Material -- Lazy and not do another module */
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button'; 
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog'; 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card';
 
 const config = getconfig();
 
@@ -51,7 +58,8 @@ Amplify.configure({
     SearchComponent,
     SignoutComponent,
     SearchesComponent,
-    AccountComponent
+    AccountComponent,
+    EditSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +70,14 @@ Amplify.configure({
     BrowserAnimationsModule,
     MatMenuModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

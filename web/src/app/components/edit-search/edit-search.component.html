@@ -1,0 +1,62 @@
+<form [formGroup]="editSearchForm" novalidate>
+  <h1 mat-dialog-title>Edit Search</h1>
+    <mat-dialog-content>
+      <mat-form-field [hidden]="true">
+        <input matInput placeholder="pk" formControlName="pk">
+      </mat-form-field>
+      <mat-form-field [hidden]="true">
+        <input matInput placeholder="sk" formControlName="sk">
+      </mat-form-field>
+      <mat-form-field [hidden]="true">
+        <input matInput placeholder="timestamp" formControlName="timestamp">
+      </mat-form-field>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Search Name" formControlName="searchName">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Search Terms" formControlName="searchTerms">
+            <!--mat-error *ngIf="addressForm.controls['firstName'].hasError('required')">
+              First name is <strong>required</strong>
+            </mat-error-->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Product" formControlName="product">
+            <!--mat-error *ngIf="addressForm.controls['lastName'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error-->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Color" formControlName="color">
+            <!--mat-error *ngIf="addressForm.controls['address'].hasError('required')">
+              Address is <strong>required</strong>
+            </mat-error-->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Brand" formControlName="brand">
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="save()">Save</button>
+      <button mat-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+</form>
