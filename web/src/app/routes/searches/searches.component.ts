@@ -1,4 +1,4 @@
-import { SaveSearchesResponse } from './../../../../../core/models';
+import { SaveSearchesResponse, SaveSearchRequest, SearchRequest } from './../../../../../core/models';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
@@ -21,4 +21,7 @@ export class SearchesComponent implements OnInit {
     this.model = this.apiService.getSavedSearches();
   }
 
+  deleteSearch(search: SaveSearchRequest): void {
+    this.apiService.delete(search).subscribe(d => this.model = this.apiService.getSavedSearches());
+  }
 }

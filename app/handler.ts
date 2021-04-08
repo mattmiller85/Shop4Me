@@ -53,7 +53,12 @@ export const save: APIGatewayProxyHandler = async (event, _context) => {
     };
   }
 
-  await repo.saveSearch(searchRequest);
+  const existingSearch = searches.find(s => s.pk === searchRequest.pk && s.sk === searchRequest.sk);
+  if (existingSearch) {
+    await repo.updateSearch(searchRequest);
+  } else {
+    await repo.saveSearch(searchRequest);
+  }
 
   return {
     statusCode: 200,
@@ -88,6 +93,29 @@ export const getSearches: APIGatewayProxyHandler = async (event, _context) => {
       message: 'Search saved!',
       success: true,
       searches: results,
+    }, null, 2),
+  };
+}
+
+export const deleteSearch: APIGatewayProxyHandler = async (event, _context) => {
+  const deleteRequest = (JSON.parse(event.body || '{}') || {}) as SaveSearchRequest;
+  console.log(event);
+  console.log(event.requestContext?.authorizer);
+  
+  const userId = event.requestContext?.authorizer?.claims['cognito:username'] || 'local';
+
+  const repo = new Repository(userId);
+  await repo.deleteSearch(deleteRequest);
+
+  return {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
+    body: JSON.stringify(<SaveSearchesResponse>{
+      message: 'Search removed!',
+      success: true
     }, null, 2),
   };
 }

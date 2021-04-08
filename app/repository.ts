@@ -24,6 +24,33 @@ export default class Repository {
     await this.ddb.put(params).promise();
   }
 
+  async updateSearch(request: SaveSearchRequest) {
+
+    const ts = new Date().getTime();
+    request.timestamp = ts;
+    const pk = `SEARCH#${this.userId}`;
+    const skValue = `ADDED#${request.sk}`;
+    request.pk = pk;
+    request.sk = skValue;
+    const params = {
+      TableName: 'shop4me.shopData',
+      Item: request
+    };
+
+    await this.ddb.put(params).promise();
+  }
+
+  async deleteSearch(request: { sk: string, pk: string }) {
+    const params = {
+      TableName: 'shop4me.shopData',
+      Key: {
+        'pk': request.pk, 'sk': request.sk
+      }
+    };
+
+    await this.ddb.delete(params).promise();
+  }
+
   async getSearches(): Promise<SaveSearchRequest[]> {
 
     const pk = `SEARCH#${this.userId}`;
@@ -36,8 +63,6 @@ export default class Repository {
       TableName: 'shop4me.shopData',
       ScanIndexForward: false
     }).promise();
-
-    console.log(results); 
     return results.Items as SaveSearchRequest[];
   }
 
