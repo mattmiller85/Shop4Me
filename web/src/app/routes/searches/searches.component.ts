@@ -39,14 +39,13 @@ export class SearchesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
         data => {
-          if(data !== undefined && data !== '') {
-            console.log("Dialog output:", data);
+          if (data !== undefined && data !== '') {
             this.apiService.save(data).subscribe();
           }
         }
-    );  
+    );
   }
-    
+
   deleteSearch(search: SaveSearchRequest): void {
     this.apiService.delete(search).subscribe(d => this.model = this.apiService.getSavedSearches());
   }

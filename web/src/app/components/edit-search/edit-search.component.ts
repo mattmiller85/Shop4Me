@@ -15,14 +15,18 @@ export class EditSearchComponent implements OnInit {
 
   editSearchForm!: FormGroup;
 
-  constructor(private dialogRef: MatDialogRef<EditSearchComponent>, @Inject(MAT_DIALOG_DATA) public data: SaveSearchRequest, private fb: FormBuilder, private apiService: ApiService ) {}
+  constructor(private dialogRef: MatDialogRef<EditSearchComponent>, @Inject(MAT_DIALOG_DATA) public data: SaveSearchRequest, private fb: FormBuilder, private apiService: ApiService) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.editSearchForm = this.fb.group(this.data);
   }
 
   save() {
-    this.dialogRef.close(this.editSearchForm.value);
+    // tslint:disable-next-line:forin
+    for (const key in this.data) {
+      this.data[key] = this.editSearchForm.value[key];
+    }
+    this.dialogRef.close(this.data);
   }
 
 }

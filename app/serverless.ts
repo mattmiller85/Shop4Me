@@ -123,7 +123,22 @@ const serverlessConfiguration: Serverless = {
           }
         }
       ]
-    }
+    },
+    deleteSearch: {
+      handler: 'handler.deleteSearch',
+      events: [
+        {
+          http: {
+            method: 'delete',
+            path: 'delete',
+            cors: true, 
+            authorizer: {
+              arn: 'arn:aws:cognito-idp:us-east-2:609487005418:userpool/us-east-2_80A86RKt9'
+            }
+          }
+        }
+      ]
+    },
   }
 }
 

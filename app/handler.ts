@@ -3,13 +3,18 @@ import { APIGatewayProxyHandler } from 'aws-lambda';
 import 'source-map-support/register';
 import Repository from './repository';
 
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+  'Access-Control-Allow-Credentials': true,
+}
 export const search: APIGatewayProxyHandler = async (event, _context) => {
   const searchRequest = JSON.parse(event.body || "{}") || {} as SearchRequest;
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
+      ...corsHeaders
     },
     body: JSON.stringify(<SearchResponse>{
       message: 'Search complete!',
@@ -42,8 +47,7 @@ export const save: APIGatewayProxyHandler = async (event, _context) => {
     return {
       statusCode: 200,
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
+        ...corsHeaders
       },
       body: JSON.stringify(<SaveSearchResponse>{
         message: 'You have reached the free tier limit of 3 saved searches',
@@ -53,13 +57,17 @@ export const save: APIGatewayProxyHandler = async (event, _context) => {
     };
   }
 
-  await repo.saveSearch(searchRequest);
+  const exists = searches.findIndex(s => s.pk === searchRequest.pk && s.sk === searchRequest.sk) > -1;
+  if (exists) {
+    await repo.updateSearch(searchRequest);
+  } else {
+    await repo.saveSearch(searchRequest);
+  }
 
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
+      ...corsHeaders
     },
     body: JSON.stringify(<SaveSearchResponse>{
       message: 'Search saved!',
@@ -81,13 +89,34 @@ export const getSearches: APIGatewayProxyHandler = async (event, _context) => {
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
+      ...corsHeaders
     },
     body: JSON.stringify(<SaveSearchesResponse>{
       message: 'Search saved!',
       success: true,
       searches: results,
+    }, null, 2),
+  };
+}
+
+export const deleteSearch: APIGatewayProxyHandler = async (event, _context) => {
+  const deleteRequest = (JSON.parse(event.body || '{}') || {}) as SaveSearchRequest;
+  console.log(event);
+  console.log(event.requestContext?.authorizer);
+  
+  const userId = event.requestContext?.authorizer?.claims['cognito:username'] || 'local';
+
+  const repo = new Repository(userId);
+  await repo.deleteSearch(deleteRequest);
+
+  return {
+    statusCode: 200,
+    headers: {
+      ...corsHeaders
+    },
+    body: JSON.stringify(<SaveSearchesResponse>{
+      message: 'Search removed!',
+      success: true
     }, null, 2),
   };
 }

@@ -27,6 +27,7 @@ export interface SaveSearchRequest {
   product: string;
   color?: string;
   brand?: string;
+  [key: string]: any;
 }
 
 export interface SaveSearchResponse {
