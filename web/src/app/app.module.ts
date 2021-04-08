@@ -16,6 +16,12 @@ import { SearchComponent } from './components/search/search.component';
 import { SignoutComponent }  from './components/routes/signout/signout.component';
 import { SearchesComponent } from './routes/searches/searches.component';
 import { AccountComponent } from './routes/account/account.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+/* Angular Material -- Lazy and not do another module */
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button'; 
 
 const config = getconfig();
 
@@ -52,7 +58,11 @@ Amplify.configure({
     AppRoutingModule,
     NgbModule,
     AmplifyUIAngularModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,7 +13,21 @@
       <div class="col col-3">{{ item.searchName }}</div>
       <div class="col col-3">{{ item.product }}</div>
       <div class="col col-3">{{ item.searchTerms }}</div>
-      <div class="col col-3">-buttons here-</div>
+      <div class="col col-3">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>delete_forever</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </div>
     </div>
   </li>
 </ul>

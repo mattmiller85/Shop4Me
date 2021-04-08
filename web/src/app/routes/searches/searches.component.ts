@@ -20,4 +20,5 @@ export class SearchesComponent implements OnInit {
   getSearches(): void {
     this.model = this.apiService.getSavedSearches();
   }
+
 }
