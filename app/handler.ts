@@ -32,7 +32,7 @@ export const save: APIGatewayProxyHandler = async (event, _context) => {
   console.log(event.body);
   console.log(event);
   
-  const userId = _context.identity?.cognitoIdentityId || 'local';
+  const userId = event.requestContext?.authorizer?.claims['cognito:username'] || 'local';
 
   const repo = new Repository(userId);
 
@@ -71,8 +71,9 @@ export const save: APIGatewayProxyHandler = async (event, _context) => {
 
 export const getSearches: APIGatewayProxyHandler = async (event, _context) => {
   console.log(event);
+  console.log(event.requestContext?.authorizer);
   
-  const userId = _context.identity?.cognitoIdentityId || 'local';
+  const userId = event.requestContext?.authorizer?.claims['cognito:username'] || 'local';
 
   const repo = new Repository(userId);
   const results = await repo.getSearches();
