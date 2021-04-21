@@ -10,7 +10,7 @@
     <div class="row justify-content-center mt-1">
       <div class="col col-sm-6">
         <button *ngIf="model.canSearch" type="submit" class="btn btn-primary">Shop!</button>&nbsp;
-        <button *ngIf="model.canSearch" type="button" class="btn btn-secondary" (click)="saveSearchDetails($event)">Save this search</button>&nbsp;
+        <button *ngIf="model.canSearch && model.canSaveSearch" type="button" class="btn btn-secondary" (click)="saveSearchDetails($event)">Save this search</button>&nbsp;
         <button *ngIf="model.canSearch" type="button" class="btn btn-warning" (click)="clearSearch($event)">Clear</button>
       </div>
     </div>
@@ -37,7 +37,7 @@
         <input [(ngModel)]="saveModel.brand" name="brand" type="text" class="form-control" id="brand" placeholder="Brand">
       </div>
       <div class="col col-sm-2">
-        <button type="button" class="btn btn-primary" (click)="saveSearch($event)">Save</button>
+        <button type="button" class="btn btn-primary" *ngIf="model.canSaveSearch" (click)="saveSearch($event)">Save</button>
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 import { map, first } from 'rxjs/operators';
-import { SearchResponse, SaveSearchRequest } from './../../../../../core/models';
+import { SearchResponse, SaveSearchRequest, SaveSearchesResponse } from './../../../../../core/models';
 import { SaveSearchResponse } from './../../../../../core/models';
 import { Observable, Subject } from 'rxjs';
 import { ApiService } from './../../services/api.service';
@@ -18,6 +18,8 @@ export class SearchComponent implements OnInit {
     saveSearch: false,
     showSaveDetails: false,
     canSearch: false,
+    canSaveSearch: false,
+    searchLimit: false,
     messages: new Array<{ type: string, message: string }>()
   };
 
@@ -34,10 +36,26 @@ export class SearchComponent implements OnInit {
 
   results = new Observable<SearchResponse>();
   saveResults = new Observable<SaveSearchResponse>();
+  searches: SaveSearchesResponse | undefined;
 
   constructor(private apiService: ApiService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.validateSearchLimit();
+  }
+
+  async validateSearchLimit(): Promise<void> {
+    this.searches = await this.apiService.getSavedSearches().toPromise();
+    if (this.searches.searches.length >= 3) {
+      this.model.searchLimit = true;
+      this.model.canSaveSearch = false;
+      this.model.messages = this.model.messages || [];
+      this.model.messages.push( { type: 'danger', message: 'You have reached the maximum of 3 searches.' } );
+    } else {
+      this.model.messages = this.model.messages.filter(m => m.message !== 'You have reached the maximum of 3 searches.');
+      this.model.searchLimit = false;
+      this.model.canSaveSearch = true;
+    }
   }
 
   search(evt: Event): void {
@@ -65,8 +83,9 @@ export class SearchComponent implements OnInit {
       return;
     }
     this.saveModel.searchTerms = this.model.searchTerms;
-    this.apiService.save(this.saveModel).subscribe((r) => {
+    this.apiService.save(this.saveModel).subscribe(async (r) => {
       this.model.messages.push({ type: r.success ? 'success' : 'danger', message: r.message });
+      await this.validateSearchLimit();
     });
   }
 
@@ -80,7 +99,7 @@ export class SearchComponent implements OnInit {
     evt.preventDefault();
     evt.stopPropagation();
     this.model.canSearch = false;
-    this.model.messages = [];
+    this.model.messages = this.model.messages.filter(m => m.message === 'You have reached the maximum of 3 searches.');
     this.model.showSaveDetails = false;
     this.model.searchTerms = '';
     this.results = new Subject();
