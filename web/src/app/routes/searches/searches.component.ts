@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { EditSearchComponent } from 'src/app/components/edit-search/edit-search.component';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { ConfirmDialogComponent } from 'src/app/components/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-searches',
@@ -47,6 +48,24 @@ export class SearchesComponent implements OnInit {
   }
 
   deleteSearch(search: SaveSearchRequest): void {
-    this.apiService.delete(search).subscribe(d => this.model = this.apiService.getSavedSearches());
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      closeOnNavigation: true,
+      width: '400px',
+      data: {
+        message: "Do you wish to delete " + search.searchName + "?",
+        title: "Delete " + search.searchName + " Search",
+        button_acceptance: "Delete " + search.searchName,
+        button_disregard: "Cancel"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(
+        data => {
+          if (data !== undefined && data !== '') {
+            this.apiService.delete(search).subscribe(d => this.model = this.apiService.getSavedSearches());
+          }
+        }
+    );
+    
   }
 }

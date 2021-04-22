@@ -30,10 +30,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
+import { ConfirmDialogComponent } from './components/shared/confirm-dialog/confirm-dialog.component';
 
 const config = getconfig();
-
-
 
 Amplify.configure({
   Auth: {
@@ -60,7 +59,8 @@ Amplify.configure({
     SignoutComponent,
     SearchesComponent,
     AccountComponent,
-    EditSearchComponent
+    EditSearchComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,

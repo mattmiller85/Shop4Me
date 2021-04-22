@@ -8,7 +8,7 @@
           <a class="nav-link" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >Home</a>
           <a *ngIf="(isLoggedIn | async) === true" class="nav-link" [routerLink]="['/searches']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >Saved Searches</a>
           <a *ngIf="(isLoggedIn | async) === true" class="nav-link" [routerLink]="['/account']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >Account</a>
-          <a *ngIf="(isLoggedIn | async) === false" class="nav-link" routerLink="signin" routerLinkActive="active">Sign In</a>
+          <a *ngIf="(isLoggedIn | async) === false" class="nav-link" [routerLink]="['/signin']" routerLinkActive="active">Sign In</a>
         </nav>
       </div>
     </header>
