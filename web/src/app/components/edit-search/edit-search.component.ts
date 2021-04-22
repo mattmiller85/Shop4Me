@@ -18,15 +18,15 @@ export class EditSearchComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<EditSearchComponent>, @Inject(MAT_DIALOG_DATA) public data: SaveSearchRequest, private fb: FormBuilder, private apiService: ApiService) { }
 
   ngOnInit() {
-    this.editSearchForm = this.fb.group(this.data);
+    this.editSearchForm = this.fb.group(this.data.message);
   }
 
   save() {
     // tslint:disable-next-line:forin
-    for (const key in this.data) {
-      this.data[key] = this.editSearchForm.value[key];
+    for (const key in this.data.message) {
+      this.data.message[key] = this.editSearchForm.value[key];
     }
-    this.dialogRef.close(this.data);
+    this.dialogRef.close(this.data.message);
   }
 
 }

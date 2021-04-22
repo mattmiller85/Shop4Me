@@ -19,6 +19,8 @@ import { SearchesComponent } from './routes/searches/searches.component';
 import { AccountComponent } from './routes/account/account.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditSearchComponent } from './components/edit-search/edit-search.component';
+import { ConfirmDialogComponent } from './components/shared/confirm-dialog/confirm-dialog.component';
+import { FaqComponent } from './routes/faq/faq.component'; 
 
 /* Angular Material -- Lazy and not do another module */
 import { MatMenuModule } from '@angular/material/menu';
@@ -30,7 +32,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
-import { ConfirmDialogComponent } from './components/shared/confirm-dialog/confirm-dialog.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatTableModule} from '@angular/material/table';
+import {CdkTableModule} from '@angular/cdk/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort'; 
+
 
 const config = getconfig();
 
@@ -60,7 +68,8 @@ Amplify.configure({
     SearchesComponent,
     AccountComponent,
     EditSearchComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +89,12 @@ Amplify.configure({
     MatRadioModule,
     MatCardModule,
     ReactiveFormsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatTableModule,
+    CdkTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

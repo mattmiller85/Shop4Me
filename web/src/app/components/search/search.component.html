@@ -1,6 +1,15 @@
-<form (submit)="search($event)" name="searchForm" id="searchForm">
+<form class="center" (submit)="search($event)" name="searchForm" id="searchForm">
+  <mat-form-field>
+    <mat-label>What are you looking for?</mat-label>
+    <input matInput [(ngModel)]="model.searchTerms" (keyup)="canSearch($event)" name="searchTerms" type="text" class="form-control" id="shop4mesearch" placeholder="Enter search terms">
+  </mat-form-field>
+  <div>
+    <button mat-button color="primary" *ngIf="model.canSearch" type="submit" class="btn btn-primary">Shop!</button>&nbsp;
+    <button mat-button color="primary"  *ngIf="model.canSearch && model.canSaveSearch" type="button" class="btn btn-secondary" (click)="saveSearchDetails($event)">Create Time Interval Search</button>&nbsp;
+    <button mat-button color="accent"  *ngIf="model.canSearch" type="button" class="btn btn-warning" (click)="clearSearch($event)">Clear</button>
+  </div>
 
-  <div class="form-group">
+  <!--div class="form-group">
     <div class="row justify-content-center">
       <div class="col col-sm-6">
         <label for="shop4mesearch">What are you looking for?</label>
@@ -14,10 +23,30 @@
         <button *ngIf="model.canSearch" type="button" class="btn btn-warning" (click)="clearSearch($event)">Clear</button>
       </div>
     </div>
-  </div>
+  </div-->
 
-  <div class="form-group" *ngIf="model.showSaveDetails && model.canSearch">
-    <div class="row justify-content-center">
+  <div *ngIf="model.showSaveDetails && model.canSearch">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="saveModel.searchName" name="searchName" type="text" class="form-control" id="searchName" placeholder="Name *">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Product</mat-label>
+      <input matInput [(ngModel)]="saveModel.product" name="product" type="text" class="form-control" id="product" placeholder="Product *">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Color</mat-label>
+      <input matInput [(ngModel)]="saveModel.color" name="color" type="text" class="form-control" id="color" placeholder="Color">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Brand</mat-label>
+      <input matInput [(ngModel)]="saveModel.brand" name="brand" type="text" class="form-control" id="brand" placeholder="Brand">
+    </mat-form-field>
+    <br>
+    
+
+    <!--div class="row justify-content-center">
       <div class="col col-sm-5">
         <label for="save_name">Name</label>
         <input [(ngModel)]="saveModel.searchName" name="searchName" type="text" class="form-control" id="searchName" placeholder="Name *">
@@ -36,22 +65,52 @@
         <label for="save_brand">Brand</label>
         <input [(ngModel)]="saveModel.brand" name="brand" type="text" class="form-control" id="brand" placeholder="Brand">
       </div>
-      <div class="col col-sm-2">
-        <button type="button" class="btn btn-primary" *ngIf="model.canSaveSearch" (click)="saveSearch($event)">Save</button>
-      </div>
-    </div>
+      <div class="col col-sm-2"-->
+        <button mat-button type="button" color="accent" *ngIf="model.canSaveSearch" (click)="saveSearch($event)">Save this search!</button>
+      <!--/div>
+    </div-->
   </div>
   <div class="row justify-content-center mt-1">
     <div class="col col-6">
-      <ul class="list-group">
-        <li *ngFor="let err of model.messages" class="list-group-item list-group-item-{{err.type}}">
+      <ul style="list-style-type: none;">
+        <li *ngFor="let err of model.messages" class="{{err.type}}">
           {{ err.message }}
         </li>
       </ul>
     </div>
   </div>
 </form>
-<div>
+
+<div *ngIf="(results | async)?.numResults || 0 > 0">
+  <mat-toolbar color="accent">Search Results</mat-toolbar>
+  <table mat-table [dataSource]="dataSource" style="width: 100%;">
+
+    <ng-container matColumnDef="Name" sticky>
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let item"> {{item.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let item"> {{item.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Price">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let item"> {{item.price}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Url" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef> URL </th>
+      <td mat-cell *matCellDef="let item" style="text-align: center;">{{item.url}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<!--div>
   <div class="row searchheader" *ngIf="(results | async)?.numResults || 0 > 0">
     <div class="col-sm-4 result name">
       Name
@@ -74,4 +133,4 @@
       {{item.price}}
     </div>
   </div>
-</div>
+</div-->

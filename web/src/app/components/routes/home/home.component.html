@@ -1,5 +1,33 @@
 
-<main role="main" class="inner cover">
+<mat-toolbar color="accent">We do your shopping so you have more time to do you!</mat-toolbar>
+
+<div *ngIf="(isLoggedIn | async) === false">
+  <p>Are you tired of endlessly searching for a unique item? Are you unsure where to locate or find a replacement vintage item?<br>Is your time being wasted because you are switching between online shopping platforms but no applicable results materialize?</p>
+
+  <p>We are the answer to all your problems!</p>
+  
+  <a mat-button routerLink="signin" class="btn btn-lg btn-secondary">Get Started</a><br>
+
+<mat-toolbar color="accent">The quick tutorial</mat-toolbar>
+
+  <p>Use our interface to save a custom searches for your hard-to-find items. We will scavage the internet and aggrigate where we have located the item for purchase. You can then dive into our hard work and review each result by navigating to that particular site.</p>
+  <p>The base tier can schedule 3 free search to be ran at a specific interval, or if you are feeling lucky the search can be done on demand!</p>
+  <p>When you do not instantly get a result you can save that search then schedule it to run! Don't worry, you will be in the loop at all times as we will email you to let you know your scheduled search obtains results!</p>
+
+  <p>All you need to do is:<br>1) Create an account and login,<br>2) Begin on demand searching with intent to save and schedule the search, and<br>3) Shop4Me will do the rest!</p>
+  <p>It really is that easy!</p>
+</div>
+
+<div *ngIf="(isLoggedIn | async) === true">
+  <h4>Greetings {{authService.username}}!</h4>
+  
+  <p>Put us to work by running a live search!</p>
+  <app-search *ngIf="(isLoggedIn | async)"></app-search>
+
+</div>
+
+
+<!--main role="main" class="inner cover">
   <p class="lead">Shop4Me does your shopping so you don't have to.</p>
   <p class="lead">
     <img src="/assets/logo.png" width="200" alt="Shop4Me">
@@ -36,4 +64,4 @@
     Welcome {{authService.username}}!
   </h2>
   <app-search *ngIf="(isLoggedIn | async)"></app-search>
-</div>
+</div-->

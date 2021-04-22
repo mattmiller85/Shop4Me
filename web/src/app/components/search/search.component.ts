@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { ApiService } from './../../services/api.service';
 import { Component, OnInit } from '@angular/core';
 import { SearchRequest } from '../../../../../core/models';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-search',
@@ -38,6 +39,17 @@ export class SearchComponent implements OnInit {
   saveResults = new Observable<SaveSearchResponse>();
   searches: SaveSearchesResponse | undefined;
 
+  displayedColumns = ["Name", "Description", "Price"];
+
+  dataSource!: MatTableDataSource<
+    { 
+      name: string;
+      price: string;
+      url: string;
+      description: string;
+    }
+  >;
+
   constructor(private apiService: ApiService) { }
 
   async ngOnInit(): Promise<void> {
@@ -62,6 +74,9 @@ export class SearchComponent implements OnInit {
     evt.preventDefault();
     evt.stopPropagation();
     this.results = this.apiService.search(this.model);
+    this.results.subscribe(things => {
+      this.dataSource = new MatTableDataSource(things.results);
+    });
   }
 
   canSearch(evt: Event): void {

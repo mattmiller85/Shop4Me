@@ -6,9 +6,11 @@ import { HomeComponent } from './components/routes/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchesComponent } from './routes/searches/searches.component';
+import { FaqComponent } from './routes/faq/faq.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'faq', component: FaqComponent},
   { path: 'shop', component: ShopComponent },
   { path: 'signin', component: SigninComponent },
   { path: 'signout', component: SignoutComponent },

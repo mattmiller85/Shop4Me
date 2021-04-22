@@ -1,0 +1,28 @@
+mat-drawer-container {
+    height: 100%;
+}
+
+mat-drawer a {
+    width: 100%;
+    font-size: 1.2em;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.mat-icon {
+    vertical-align: middle;
+}
+
+
+mat-drawer-container  mat-drawer  a  mat-icon {
+    margin-left: 16px;
+    float: right;
+    vertical-align: top;
+    font-size: 1.9em;
+}
+
+.huerotate {
+    filter: hue-rotate(-35deg) brightness(1.20);
+}

@@ -4,8 +4,8 @@ import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { EditSearchComponent } from 'src/app/components/edit-search/edit-search.component';
-import { MatMenuTrigger } from '@angular/material/menu';
 import { ConfirmDialogComponent } from 'src/app/components/shared/confirm-dialog/confirm-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-searches',
@@ -14,16 +14,24 @@ import { ConfirmDialogComponent } from 'src/app/components/shared/confirm-dialog
 })
 export class SearchesComponent implements OnInit {
 
+  displayedColumns: string[] = ['Name', 'Product', 'Terms', 'Menu'];
+
   model = new Observable<SaveSearchesResponse>();
+
+  dataSource = new MatTableDataSource<SaveSearchRequest>();
 
   constructor(private apiService: ApiService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getSearches();
+    this.model.subscribe(things => {
+      this.dataSource = new MatTableDataSource(things.searches);
+    });
   }
 
   getSearches(): void {
     this.model = this.apiService.getSavedSearches();
+
   }
 
   saveSearch(searchRequest: SaveSearchRequest): void {
@@ -35,7 +43,12 @@ export class SearchesComponent implements OnInit {
     const dialogRef = this.dialog.open(EditSearchComponent, {
       closeOnNavigation: true,
       width: '400px',
-      data: item
+      data: {
+        title: "Edit Search",
+        message: item,
+        button_acceptance: "Save",
+        button_disregard: "Cancel"
+      }
     });
 
     dialogRef.afterClosed().subscribe(
