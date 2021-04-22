@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{data.message}}</h1>
+<mat-dialog-content>
+  <p display-2>{{data.message}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="acceptance()">{{data.button_acceptance}}</button>
+  <button mat-button mat-dialog-close>{{data.button_disregard}}</button>
+</mat-dialog-actions>
