@@ -1,11 +1,13 @@
 import { map, first } from 'rxjs/operators';
 import { SearchResponse, SaveSearchRequest, SaveSearchesResponse } from './../../../../../core/models';
 import { SaveSearchResponse } from './../../../../../core/models';
-import { Observable, Subject } from 'rxjs';
+import { async, Observable, Subject } from 'rxjs';
 import { ApiService } from './../../services/api.service';
 import { Component, OnInit } from '@angular/core';
 import { SearchRequest } from '../../../../../core/models';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { EditSearchComponent } from '../shared/edit-search/edit-search.component';
 
 @Component({
   selector: 'app-search',
@@ -50,7 +52,7 @@ export class SearchComponent implements OnInit {
     }
   >;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private dialog: MatDialog) { }
 
   async ngOnInit(): Promise<void> {
     await this.validateSearchLimit();
@@ -82,7 +84,7 @@ export class SearchComponent implements OnInit {
   canSearch(evt: Event): void {
     this.model.canSearch = (this.model.searchTerms !== undefined && this.model.searchTerms.trim() !== '');
   }
-
+/*
   saveSearch(evt: Event): void {
     evt.preventDefault();
     evt.stopPropagation();
@@ -103,11 +105,50 @@ export class SearchComponent implements OnInit {
       await this.validateSearchLimit();
     });
   }
-
+*/
   saveSearchDetails(evt: Event): void {
     evt.preventDefault();
     evt.stopPropagation();
     this.model.showSaveDetails = !this.model.showSaveDetails;
+    // tslint:disable-next-line:forin
+    this.saveModel.searchTerms = this.model.searchTerms;
+    const dialogRef = this.dialog.open(EditSearchComponent, {
+      closeOnNavigation: true,
+      width: '400px',
+      data: {
+        title: "Create New Search",
+        message: this.saveModel,
+        button_acceptance: "Save",
+        button_disregard: "Cancel"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(
+        data => {
+          if (data !== undefined && data !== '') {
+            this.model.messages = [];
+            this.saveModel = data;
+          
+            if (this.saveModel.searchName === undefined || this.saveModel.searchName.trim() === '') {
+              this.model.messages.push({ type: 'danger', message: 'Please enter a "Name" for the search.' });
+            }
+            if (this.saveModel.product === undefined || this.saveModel.product.trim() === '') {
+              this.model.messages.push({ type: 'danger', message: 'Please enter a "Product" for the search.' });
+            }
+
+            if (this.model.messages.length) {
+              return;
+            }
+            this.saveModel.searchTerms = this.model.searchTerms;
+            this.apiService.save(this.saveModel).subscribe(async (r) => {
+              this.model.messages.push({ type: r.success ? 'success' : 'danger', message: r.message });
+              await this.validateSearchLimit();
+            });
+
+            //this.apiService.save(data).subscribe();
+          }
+        }
+    );
   }
 
   clearSearch(evt: Event): void {
@@ -118,5 +159,15 @@ export class SearchComponent implements OnInit {
     this.model.showSaveDetails = false;
     this.model.searchTerms = '';
     this.results = new Subject();
+    this.saveModel = {
+                      pk: '',
+                      sk: '',
+                      timestamp: 0,
+                      searchTerms: this.model.searchTerms,
+                      searchName: '',
+                      product: '',
+                      color: '',
+                      brand: ''
+                    };
   }
 }

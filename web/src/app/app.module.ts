@@ -18,7 +18,7 @@ import { SignoutComponent } from './components/routes/signout/signout.component'
 import { SearchesComponent } from './routes/searches/searches.component';
 import { AccountComponent } from './routes/account/account.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EditSearchComponent } from './components/edit-search/edit-search.component';
+import { EditSearchComponent } from './components/shared/edit-search/edit-search.component';
 import { ConfirmDialogComponent } from './components/shared/confirm-dialog/confirm-dialog.component';
 import { FaqComponent } from './routes/faq/faq.component'; 
 

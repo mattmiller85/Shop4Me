@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { EditSearchComponent } from 'src/app/components/edit-search/edit-search.component';
+import { EditSearchComponent } from 'src/app/components/shared/edit-search/edit-search.component';
 import { ConfirmDialogComponent } from 'src/app/components/shared/confirm-dialog/confirm-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -75,7 +75,12 @@ export class SearchesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
         data => {
           if (data !== undefined && data !== '') {
-            this.apiService.delete(search).subscribe(d => this.model = this.apiService.getSavedSearches());
+            this.apiService.delete(search).subscribe(d => {
+              this.getSearches();
+              this.model.subscribe(things => {
+                this.dataSource = new MatTableDataSource(things.searches);
+              });
+            });
           }
         }
     );

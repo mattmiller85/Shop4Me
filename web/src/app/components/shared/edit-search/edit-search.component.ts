@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 
-import { SaveSearchRequest } from './../../../../../core/models';
+import { SaveSearchRequest } from '../../../../../../core/models';
 
 
 @Component({
