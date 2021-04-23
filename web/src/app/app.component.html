@@ -1,5 +1,6 @@
 <mat-drawer-container>
-  <mat-drawer #drawer mode="side" closed>
+  <mat-drawer #drawer mode="side">
+    <a mat-button (click)="drawer.close()">&nbsp;<mat-icon>close</mat-icon>&nbsp;</a><br>
     <a mat-button [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home<span class="spacer"></span><mat-icon inline=true>home</mat-icon></a><br>
     <a mat-button *ngIf="(isLoggedIn | async) === false" [routerLink]="['/signin']" routerLinkActive="active">Login<span class="spacer"></span><mat-icon inline=true>login</mat-icon></a><br *ngIf="(isLoggedIn | async) === false">
     <a mat-button [routerLink]="['/faq']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">FAQ<span class="spacer"></span><mat-icon inline=true>question_answer</mat-icon></a><br>
